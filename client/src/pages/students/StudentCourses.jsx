@@ -15,7 +15,7 @@ import { StudentContext } from "@/context/student-context";
 import { fetchStudentCourseList } from "@/services";
 import { ArrowUpDownIcon } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const createSearchParamsHelper = (filtersParams) => {
   const query = [];
@@ -32,6 +32,7 @@ const StudentCourses = () => {
   const [sort, setSort] = useState("price-lowtohigh");
   const [filters, setFilters] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate =useNavigate();
 
   const { studentCourseList, setStudentCourseList, loading, setLoading } = useContext(StudentContext);
 
@@ -59,7 +60,7 @@ const StudentCourses = () => {
       setStudentCourseList(response?.data);
       setLoading(false);
     }
-    // console.log(response)
+    console.log(response.data);
   };
 
   useEffect(() => {
@@ -135,7 +136,7 @@ const StudentCourses = () => {
           <div className="space-y-4">
             {studentCourseList && studentCourseList.length > 0 ? (
               studentCourseList.map((item) => (
-                <Card>
+                <Card key={item?._id} className="cursor-pointer" onClick={() =>navigate(`/courses/details/${item._id}`)}>
                   <CardContent className="flex gap-4 p-4">
                     <div className="w-48 h-32 flex-shrink-0">
                       <img src={item?.image} alt={item.title} className="w-full h-full object-cover" />
