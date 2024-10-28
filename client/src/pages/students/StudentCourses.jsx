@@ -60,7 +60,7 @@ const StudentCourses = () => {
       setStudentCourseList(response?.data);
       setLoading(false);
     }
-    console.log(response.data);
+    // console.log(response.data);
   };
 
   useEffect(() => {
