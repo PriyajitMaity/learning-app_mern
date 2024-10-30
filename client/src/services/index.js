@@ -64,3 +64,11 @@ export async function fetchStudentCourseList(query){
   const { data } = await accessApi.post(`/student/course/get?${query}`);
   return data;
 }
+export async function createPayment(formData){
+  const { data } = await accessApi.post(`/student/order/create`, formData);
+  return data;
+}
+export async function captureAndFinalizePayment(formData){
+  const { data } = await accessApi.post(`/student/order/capture`, formData);
+  return data;
+}

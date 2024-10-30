@@ -24,18 +24,18 @@ const createOrder =async(req, res) =>{
         } =req.body;
 
         const create_payment_json ={
-            intent: 'sale',
+            intent:"sale",
             payer: {
-                payment_method: 'paypal',
+                payment_method: "paypal",
             },
             redirect_urls: {
-                redirect_url: `${process.env.CLIENT_URL}/payment-return`,
+                return_url: `${process.env.CLIENT_URL}/payment-return`,
                 cancel_url: `${process.env.CLIENT_URL}/payment-cancel`,
             },
             transactions: [
                 {
                     item_list: {
-                        tems: [
+                        items: [
                             {
                                 name:courseTitle,
                                 sku: courseId,
@@ -54,6 +54,7 @@ const createOrder =async(req, res) =>{
         };
 
         paypal.payment.create(create_payment_json, async(error, paymentInfo) =>{
+            // console.log(create_payment_json, 'mmn')
             if(error){
                 console.log(error);
                 res.status(500).json({
@@ -80,7 +81,7 @@ const createOrder =async(req, res) =>{
                 });
                 await order.save();
 
-                const approveUrl =paymentInfo.links.find((link) =>link.rel == "approve_url").href;
+                const approveUrl =paymentInfo.links.find((link) =>link.rel == "approval_url").href;
 
                 res.status(200).json({
                     success: true,

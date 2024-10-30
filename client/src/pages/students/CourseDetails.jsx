@@ -1,20 +1,23 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StudentContext } from "@/context/student-context";
-import { courseDetailsById } from "@/services";
+import { courseDetailsById, createPayment } from "@/services";
 import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
 import VideoPlayer from "@/components/videoPlayer/VideoPlayer";
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { AuthContext } from "@/context/auth-context";
 
 const StudentCourseDetails = () => {
   const { courseEditedId, setCourseEditedId, studentCourseDetails, setStudentCourseDetails, loading, setLoading } =
     useContext(StudentContext);
+  const {auth} =useContext(AuthContext);
 
   const [displayCurrentVideoPreview, setDisplayCurrentVideoPreview] = useState(null);
   const [displayDialog, setDisplayDialog] = useState(false);
+  const [approveUrl, setApproveUrl] =useState("");
 
   const { id } = useParams();
 
@@ -51,7 +54,40 @@ const StudentCourseDetails = () => {
     setDisplayDialog(true);
   };
 
+  const handleCreatePayment =async() =>{
+    const paymentPayload ={
+            userId: auth?.user?._id,
+            userName: auth?.user?.userName,
+            userEmail: auth?.user?.userEmail,
+            orderStatus: "pending",
+            paymentMethod: "paypal",
+            paymentStatus: "initiated",
+            orderDate: new Date(),
+            paymentId: "",
+            payerId: "",
+            instructorId: studentCourseDetails?.instructorId,
+            instructorName: studentCourseDetails?.instructorName,
+            courseImage: studentCourseDetails?.image,
+            courseTitle: studentCourseDetails?.title,
+            courseId: studentCourseDetails?._id,
+            coursePricing: studentCourseDetails?.pricing,
+    };
+    // console.log(paymentPayload, "payment");
+    const response =await createPayment(paymentPayload);
+
+    if(response.success){
+      sessionStorage.setItem(
+        "currOrderID", JSON.stringify(response?.data?.orderId)
+      )
+      setApproveUrl(response?.data?.approveUrl);
+      // console.log(approveUrl);
+    }
+  }
+
   if (loading) return <Skeleton />;
+  if(approveUrl !== '') {
+    window.location.href =approveUrl;
+  }
   return (
     <div className="mx-auto p-4">
       <div className="bg-gray-900 text-white p-8 rounded-t-lg">
@@ -128,7 +164,7 @@ const StudentCourseDetails = () => {
               <div className="mb-4">
                 <span className="text-3xl font-bold">${studentCourseDetails?.pricing}</span>
               </div>
-              <Button className="w-full">Buy now</Button>
+              <Button className="w-full" onClick={handleCreatePayment}>Buy now</Button>
             </CardContent>
           </Card>
         </aside>
