@@ -4,9 +4,10 @@ export const StudentContext = createContext(null);
 
 const StudentProvider = ({ children }) => {
   const [studentCourseList, setStudentCourseList] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [studentCourseDetails, setStudentCourseDetails] = useState(null);
   const [courseEditedId, setCourseEditedId] = useState(null);
+  const [studentBoughtCourseList, setStudentBoughtCourseList] = useState([]);
 
   return (
     <StudentContext.Provider
@@ -19,6 +20,8 @@ const StudentProvider = ({ children }) => {
         setStudentCourseDetails,
         courseEditedId,
         setCourseEditedId,
+        studentBoughtCourseList,
+        setStudentBoughtCourseList,
       }}
     >
       {children}

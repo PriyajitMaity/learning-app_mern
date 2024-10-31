@@ -7,6 +7,7 @@ const mediaRoutes =require('./routes/admin-routes/mediaRoutes');
 const courseRoutes =require('./routes/admin-routes/courseRoutes');
 const studentCourseRoutes =require('./routes/student-routes/courseRoutes');
 const studentOrderRoutes =require('./routes/student-routes/orderRoutes');
+const studentBuyingCourseRoutes =require('./routes/student-routes/studentCourseRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -24,6 +25,15 @@ app.use(cors({
   app.use('/admin/course', courseRoutes);
   app.use('/student/course', studentCourseRoutes);
   app.use('/student/order', studentOrderRoutes);
+  app.use('/student/courses-buy', studentBuyingCourseRoutes);
+
+  // app.use((err, req, res, next) => {
+  //   console.log(err.stack);
+  //   res.status(500).json({
+  //     success: false,
+  //     message: "Something went wrong",
+  //   });
+  // });
 
 //database connection
 mongoose

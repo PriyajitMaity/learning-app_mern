@@ -20,9 +20,7 @@ export async function mediaUpload(formData, onProgressCallback) {
 
   const { data } = await accessApi.post("/media/upload", formData, {
     onUploadProgress: (progressEvent) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total
-      );
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
       onProgressCallback(percentCompleted);
     },
   });
@@ -31,44 +29,46 @@ export async function mediaUpload(formData, onProgressCallback) {
 export async function bulkMediaUpload(formData, onProgressCallback) {
   const { data } = await accessApi.post("/media/bulk-upload", formData, {
     onUploadProgress: (progressEvent) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total
-      );
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
       onProgressCallback(percentCompleted);
     },
   });
   return data;
 }
-export async function mediaDeleteVideo(id){
+export async function mediaDeleteVideo(id) {
   const { data } = await accessApi.delete(`/media/delete/${id}`);
   return data;
 }
 
-export async function fetchCourseList(){
+export async function fetchCourseList() {
   const { data } = await accessApi.get(`/admin/course/get`);
   return data;
 }
-export async function addNewCourse(formData){
+export async function addNewCourse(formData) {
   const { data } = await accessApi.post(`/admin/course/add`, formData);
   return data;
 }
-export async function courseDetailsById(id){
+export async function courseDetailsById(id) {
   const { data } = await accessApi.get(`/admin/course/get/details/${id}`);
   return data;
 }
-export async function updateCourseById(id, formData){
+export async function updateCourseById(id, formData) {
   const { data } = await accessApi.put(`/admin/course/update/${id}`, formData);
   return data;
 }
-export async function fetchStudentCourseList(query){
+export async function fetchStudentCourseList(query) {
   const { data } = await accessApi.post(`/student/course/get?${query}`);
   return data;
 }
-export async function createPayment(formData){
+export async function createPayment(formData) {
   const { data } = await accessApi.post(`/student/order/create`, formData);
   return data;
 }
-export async function captureAndFinalizePayment(formData){
-  const { data } = await accessApi.post(`/student/order/capture`, formData);
+export async function captureAndFinalizePayment(paymentId, PayerId, orderId) {
+  const { data } = await accessApi.post(`/student/order/capture`, { paymentId, PayerId, orderId });
+  return data;
+}
+export async function fetchStudentBuyingCourses(studentId) {
+  const { data } = await accessApi.get(`/student/courses-buy/get/${studentId}`);
   return data;
 }

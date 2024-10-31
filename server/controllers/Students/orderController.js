@@ -149,7 +149,7 @@ const paymentAndFinalizeOrder =async(req, res) =>{
                         courseImage: order.courseImage,
                     },
                 ],
-            });
+            });            
             await newStudentCourse.save();
         }
 
@@ -167,8 +167,7 @@ const paymentAndFinalizeOrder =async(req, res) =>{
             success: true,
             message: "order confirmed",
             data: order
-        });
-        
+        });        
     } catch (error) {
         console.log(error);
         res.status(500).json({
