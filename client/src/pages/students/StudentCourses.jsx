@@ -11,8 +11,9 @@ import {
 import { Label } from "@/components/ui/label";
 import { Skeleton } from "@/components/ui/skeleton";
 import { filterOptions, sortOptions } from "@/config/config";
+import { AuthContext } from "@/context/auth-context";
 import { StudentContext } from "@/context/student-context";
-import { fetchStudentCourseList } from "@/services";
+import { checkCoursePurchaseInfo, fetchStudentCourseList } from "@/services";
 import { ArrowUpDownIcon } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -34,6 +35,7 @@ const StudentCourses = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate =useNavigate();
 
+  const {auth} =useContext(AuthContext);
   const { studentCourseList, setStudentCourseList, loading, setLoading } = useContext(StudentContext);
 
   const handleFilterOnChange = (getKeyItem, getOption) => {
@@ -82,6 +84,17 @@ const StudentCourses = () => {
     sessionStorage.removeItem("filters")
   }, []);
 
+  const handleCourseNavigate =async(getCourseId) =>{
+    const response =await checkCoursePurchaseInfo(getCourseId, auth?.user?._id);
+    if(response?.success){
+      if(response?.data){
+        navigate(`/course-progress/${getCourseId}`);
+      }else{
+        navigate(`/courses/details/${getCourseId}`);
+      }
+    }
+
+  }
 
   return (
     <div className="container mx-auto p-4">
@@ -136,7 +149,7 @@ const StudentCourses = () => {
           <div className="space-y-4">
             {studentCourseList && studentCourseList.length > 0 ? (
               studentCourseList.map((item) => (
-                <Card key={item?._id} className="cursor-pointer" onClick={() =>navigate(`/courses/details/${item._id}`)}>
+                <Card key={item?._id} className="cursor-pointer" onClick={() =>handleCourseNavigate(item?._id)}>
                   <CardContent className="flex gap-4 p-4">
                     <div className="w-48 h-32 flex-shrink-0">
                       <img src={item?.image} alt={item.title} className="w-full h-full object-cover" />

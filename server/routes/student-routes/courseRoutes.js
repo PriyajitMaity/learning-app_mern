@@ -1,9 +1,10 @@
 const express =require("express");
-const {  getViewCourses, getViewCoursesDetails  } =require("../../controllers/Students/courseController");
+const {  getViewCourses, getViewCoursesDetails, coursePurchaseInfo  } =require("../../controllers/Students/courseController");
 
 const router =express.Router();
 
-router.post("/get", getViewCourses);
-router.post("/get/details/:id", getViewCoursesDetails);
+router.get("/get", getViewCourses);
+router.get("/get/details/:id", getViewCoursesDetails);
+router.get("/purchase-info/:id/:studentId", coursePurchaseInfo)
 
 module.exports = router;

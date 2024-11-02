@@ -1,4 +1,5 @@
 const Course =require("../../models/Course");
+const StudentCourse =require("../../models/StudentCourse");
 
 const getViewCourses =async(req, res) =>{ 
     try {   
@@ -76,4 +77,25 @@ const getViewCoursesDetails =async(req, res) =>{
         })
     }
 }
-module.exports ={ getViewCourses, getViewCoursesDetails };
+
+const coursePurchaseInfo =async(req, res) =>{
+    try {
+        const {id, studentId} =req.params;
+        const studentCourses =await StudentCourse.findOne({
+            userId: studentId,
+        })
+
+        const ifStudentAlreadyBoughtCurrentCourse =studentCourses.courses.findIndex((item) =>item.courseId ===id) > -1;
+        res.status(200).json({
+            success: true,
+            data: ifStudentAlreadyBoughtCurrentCourse
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            success: false,
+            message: 'Some error occurred'
+        })
+    }
+}
+module.exports ={ getViewCourses, getViewCoursesDetails, coursePurchaseInfo };

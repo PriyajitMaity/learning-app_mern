@@ -52,12 +52,16 @@ export async function courseDetailsById(id) {
   const { data } = await accessApi.get(`/admin/course/get/details/${id}`);
   return data;
 }
+export async function checkCoursePurchaseInfo(id, studentId) {
+  const { data } = await accessApi.get(`/student/course/purchase-info/${id}/${studentId}`);
+  return data;
+}
 export async function updateCourseById(id, formData) {
   const { data } = await accessApi.put(`/admin/course/update/${id}`, formData);
   return data;
 }
 export async function fetchStudentCourseList(query) {
-  const { data } = await accessApi.post(`/student/course/get?${query}`);
+  const { data } = await accessApi.get(`/student/course/get?${query}`);
   return data;
 }
 export async function createPayment(formData) {
