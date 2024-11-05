@@ -13,11 +13,11 @@ import { AuthContext } from "@/context/auth-context";
 const StudentCourseDetails = () => {
   const { courseEditedId, setCourseEditedId, studentCourseDetails, setStudentCourseDetails, loading, setLoading } =
     useContext(StudentContext);
-  const {auth} =useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
 
   const [displayCurrentVideoPreview, setDisplayCurrentVideoPreview] = useState(null);
   const [displayDialog, setDisplayDialog] = useState(false);
-  const [approveUrl, setApproveUrl] =useState("");
+  const [approveUrl, setApproveUrl] = useState("");
 
   const { id } = useParams();
 
@@ -26,7 +26,7 @@ const StudentCourseDetails = () => {
     if (response?.success) {
       setStudentCourseDetails(response.data);
       setLoading(false);
-    //   console.log(response.data);
+        // console.log(response.data);
     } else {
       setStudentCourseDetails(null);
       setLoading(false);
@@ -35,10 +35,10 @@ const StudentCourseDetails = () => {
 
   useEffect(() => {
     if (courseEditedId !== null) fetchStudentCourseDetails();
-    return () =>{
-        setCourseEditedId(null);
-        setStudentCourseDetails(null);
-    }
+    return () => {
+      setCourseEditedId(null);
+      setStudentCourseDetails(null);
+    };
   }, [courseEditedId]);
 
   useEffect(() => {
@@ -49,44 +49,42 @@ const StudentCourseDetails = () => {
     studentCourseDetails !== null ? studentCourseDetails?.curriculum?.findIndex((ele) => ele.freePreview) : -1;
 
   const handleSetPreview = (currVdoInfo) => {
-    console.log(currVdoInfo, "vdo");
+    // console.log(currVdoInfo, "vdo");
     setDisplayCurrentVideoPreview(currVdoInfo?.videoUrl);
     setDisplayDialog(true);
   };
 
-  const handleCreatePayment =async() =>{
-    const paymentPayload ={
-            userId: auth?.user?._id,
-            userName: auth?.user?.userName,
-            userEmail: auth?.user?.userEmail,
-            orderStatus: "pending",
-            paymentMethod: "paypal",
-            paymentStatus: "initiated",
-            orderDate: new Date(),
-            paymentId: "",
-            payerId: "",
-            instructorId: studentCourseDetails?.instructorId,
-            instructorName: studentCourseDetails?.instructorName,
-            courseImage: studentCourseDetails?.image,
-            courseTitle: studentCourseDetails?.title,
-            courseId: studentCourseDetails?._id,
-            coursePricing: studentCourseDetails?.pricing,
+  const handleCreatePayment = async () => {
+    const paymentPayload = {
+      userId: auth?.user?._id,
+      userName: auth?.user?.userName,
+      userEmail: auth?.user?.userEmail,
+      orderStatus: "pending",
+      paymentMethod: "paypal",
+      paymentStatus: "initiated",
+      orderDate: new Date(),
+      paymentId: "",
+      payerId: "",
+      instructorId: studentCourseDetails?.instructorId,
+      instructorName: studentCourseDetails?.instructorName,
+      courseImage: studentCourseDetails?.image,
+      courseTitle: studentCourseDetails?.title,
+      courseId: studentCourseDetails?._id,
+      coursePricing: studentCourseDetails?.pricing,
     };
     // console.log(paymentPayload, "payment");
-    const response =await createPayment(paymentPayload);
+    const response = await createPayment(paymentPayload);
 
-    if(response.success){
-      sessionStorage.setItem(
-        "currOrderID", JSON.stringify(response?.data?.orderId)
-      )
+    if (response.success) {
+      sessionStorage.setItem("currOrderID", JSON.stringify(response?.data?.orderId));
       setApproveUrl(response?.data?.approveUrl);
       // console.log(approveUrl);
     }
-  }
+  };
 
   if (loading) return <Skeleton />;
-  if(approveUrl !== '') {
-    window.location.href =approveUrl;
+  if (approveUrl !== "") {
+    window.location.href = approveUrl;
   }
   return (
     <div className="mx-auto p-4">
@@ -100,7 +98,7 @@ const StudentCourseDetails = () => {
             <Globe className="mr-1 h-4 w-4" />
             {studentCourseDetails?.primaryLanguage}
           </span>
-          <span >
+          <span>
             {studentCourseDetails?.students.length}{" "}
             {studentCourseDetails?.students.length <= 1 ? "student" : "students"}
           </span>
@@ -134,7 +132,7 @@ const StudentCourseDetails = () => {
               <CardTitle>Course Curriculum</CardTitle>
             </CardHeader>
             <CardContent>
-              {studentCourseDetails?.curriculum.map((item, index) => (
+              {studentCourseDetails?.curriculum?.map((item, index) => (
                 <li
                   className={`${item?.freePreview ? "cursor-pointer" : "cursor-not-allowed"} flex items-center mb-4`}
                   onClick={item?.freePreview ? () => handleSetPreview(item) : null}
@@ -164,7 +162,9 @@ const StudentCourseDetails = () => {
               <div className="mb-4">
                 <span className="text-3xl font-bold">${studentCourseDetails?.pricing}</span>
               </div>
-              <Button className="w-full" onClick={handleCreatePayment}>Buy now</Button>
+              <Button className="w-full" onClick={handleCreatePayment}>
+                Buy now
+              </Button>
             </CardContent>
           </Card>
         </aside>
@@ -184,11 +184,13 @@ const StudentCourseDetails = () => {
             <VideoPlayer url={displayCurrentVideoPreview} width="450px" height="200px" />
           </div>
           <div className="flex flex-col gap-2">
-            {
-                studentCourseDetails?.curriculum?.filter((item) =>item.freePreview).map((filterItem) =>(
-                    <p className="cursor-pointer text-[16px] font-medium" onClick={() =>handleSetPreview(filterItem)}>{filterItem?.title}</p>
-                ))
-            }
+            {studentCourseDetails?.curriculum
+              ?.filter((item) => item.freePreview)
+              .map((filterItem) => (
+                <p className="cursor-pointer text-[16px] font-medium" onClick={() => handleSetPreview(filterItem)}>
+                  {filterItem?.title}
+                </p>
+              ))}
           </div>
           {/* <DialogFooter className="sm:justify-start">
             <DialogClose asChild>
