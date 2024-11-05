@@ -8,6 +8,7 @@ const courseRoutes =require('./routes/admin-routes/courseRoutes');
 const studentCourseRoutes =require('./routes/student-routes/courseRoutes');
 const studentOrderRoutes =require('./routes/student-routes/orderRoutes');
 const studentBuyingCourseRoutes =require('./routes/student-routes/studentCourseRoutes');
+const studentCourseProgressRoutes =require('./routes/student-routes/courseProgressRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -26,6 +27,7 @@ app.use(cors({
   app.use('/student/course', studentCourseRoutes);
   app.use('/student/order', studentOrderRoutes);
   app.use('/student/courses-buy', studentBuyingCourseRoutes);
+  app.use('/student/courses-progress', studentCourseProgressRoutes);
 
   // app.use((err, req, res, next) => {
   //   console.log(err.stack);

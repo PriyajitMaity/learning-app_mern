@@ -76,3 +76,15 @@ export async function fetchStudentBuyingCourses(studentId) {
   const { data } = await accessApi.get(`/student/courses-buy/get/${studentId}`);
   return data;
 }
+export async function getStudentCurrentCourseProgress(userId, courseId) {
+  const { data } = await accessApi.get(`/student/courses-progress/get/${userId}/${courseId}`);
+  return data;
+}
+export async function markLectureAsView(userId, courseId, lectureId) {
+  const { data } = await accessApi.post(`/student/courses-progress/mark-lecture-viewed/`, {userId, courseId, lectureId});
+  return data;
+}
+export async function resetCourseProgress(userId, courseId) {
+  const { data } = await accessApi.post(`/student/courses-progress/reset-progress/`, { userId, courseId });
+  return data;
+}
