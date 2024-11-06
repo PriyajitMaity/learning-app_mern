@@ -68,7 +68,7 @@ function App() {
         <Route path="" element={<StudentHomePage />} />
         <Route path="home" element={<StudentHomePage />} />
         <Route path="courses" element={<StudentCourses/>} />
-        <Route path="courses/details/:id" element={<StudentCourseDetails/>} />
+        <Route path="course/details/:id" element={<StudentCourseDetails/>} />
         <Route path="payment-return" element={<PaymentReturn />} />
         <Route path="student-courses" element={<StudentCoursesViewPage/>} />
         <Route path="course-progress/:id" element={<StudentViewCourseProgress/>} />

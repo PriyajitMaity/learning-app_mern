@@ -52,8 +52,12 @@ export async function courseDetailsById(id) {
   const { data } = await accessApi.get(`/admin/course/get/details/${id}`);
   return data;
 }
-export async function checkCoursePurchaseInfo(id, studentId) {
-  const { data } = await accessApi.get(`/student/course/purchase-info/${id}/${studentId}`);
+export async function StudentCourseDetailsById(courseId) {
+  const { data } = await accessApi.get(`/student/course/get/details/${courseId}`);
+  return data;
+}
+export async function checkCoursePurchaseInfoService(courseId, studentId) {
+  const { data } = await accessApi.get(`/student/course/purchase-info/${courseId}/${studentId}`);
   return data;
 }
 export async function updateCourseById(id, formData) {
@@ -77,14 +81,14 @@ export async function fetchStudentBuyingCourses(studentId) {
   return data;
 }
 export async function getStudentCurrentCourseProgress(userId, courseId) {
-  const { data } = await accessApi.get(`/student/courses-progress/get/${userId}/${courseId}`);
+  const { data } = await accessApi.get(`/student/course-progress/get/${userId}/${courseId}`);
   return data;
 }
 export async function markLectureAsView(userId, courseId, lectureId) {
-  const { data } = await accessApi.post(`/student/courses-progress/mark-lecture-viewed/`, {userId, courseId, lectureId});
+  const { data } = await accessApi.post(`/student/course-progress/mark-lecture-viewed/`, {userId, courseId, lectureId});
   return data;
 }
 export async function resetCourseProgress(userId, courseId) {
-  const { data } = await accessApi.post(`/student/courses-progress/reset-progress/`, { userId, courseId });
+  const { data } = await accessApi.post(`/student/course-progress/reset-progress/`, { userId, courseId });
   return data;
 }
