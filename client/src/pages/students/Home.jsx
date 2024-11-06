@@ -3,7 +3,7 @@ import banner from "../../image/banner-img.png";
 import { courseCategories } from "@/config/config";
 import { Button } from "@/components/ui/button";
 import { StudentContext } from "@/context/student-context";
-import { checkCoursePurchaseInfo, fetchStudentCourseList } from "@/services";
+import { checkCoursePurchaseInfoService, fetchStudentCourseList } from "@/services";
 import { AuthContext } from "@/context/auth-context";
 import { useNavigate } from "react-router-dom";
 
@@ -32,12 +32,12 @@ const StudentHomePage = () => {
   };
 
   const handleCourseNavigate = async (getCourseId) => {
-    const response = await checkCoursePurchaseInfo(getCourseId, auth?.user?._id);
+    const response = await checkCoursePurchaseInfoService(getCourseId, auth?.user?._id);
     if (response?.success) {
       if (response?.data) {
         navigate(`/course-progress/${getCourseId}`);
       } else {
-        navigate(`/courses/details/${getCourseId}`);
+        navigate(`/course/details/${getCourseId}`);
       }
     }
   };
@@ -60,10 +60,10 @@ const StudentHomePage = () => {
             <Button
               variant="outline"
               className="justify-start"
-              key={item.id}
-              onClick={() => handleNavigateToCoursePage(item.id)}
+              key={item?.id}
+              onClick={() => handleNavigateToCoursePage(item?.id)}
             >
-              {item.label}
+              {item?.label}
             </Button>
           ))}
         </div>

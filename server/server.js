@@ -27,15 +27,15 @@ app.use(cors({
   app.use('/student/course', studentCourseRoutes);
   app.use('/student/order', studentOrderRoutes);
   app.use('/student/courses-buy', studentBuyingCourseRoutes);
-  app.use('/student/courses-progress', studentCourseProgressRoutes);
+  app.use('/student/course-progress', studentCourseProgressRoutes);
 
-  // app.use((err, req, res, next) => {
-  //   console.log(err.stack);
-  //   res.status(500).json({
-  //     success: false,
-  //     message: "Something went wrong",
-  //   });
-  // });
+  app.use((err, req, res, next) => {
+    console.log(err.stack);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  });
 
 //database connection
 mongoose

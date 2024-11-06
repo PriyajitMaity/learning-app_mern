@@ -15,7 +15,7 @@ const AdminDashboardPage = () => {
 
     const fetchAllCourses =async() =>{
         const response =await fetchCourseList();
-        console.log(response, 'response');
+        // console.log(response, 'response');
         if(response?.success) setCourseList(response?.data);
         
     }
@@ -27,7 +27,7 @@ const AdminDashboardPage = () => {
             icon: BarChart,
             label: "Dashboard",
             value: "dashboard",
-            component: <AdminDashboard />
+            component: <AdminDashboard listOfCourses={courseList} />
         },
         {
             icon: Book,
@@ -46,6 +46,7 @@ const AdminDashboardPage = () => {
         resetCredentials();
         sessionStorage.clear();
     }
+console.log(courseList, 'courseList');
 
   return <div className="flex h-full min-h-screen bg-gray-100">
     <aside className="w-64 bg-white shadow-md hidden md:block">
@@ -72,7 +73,7 @@ const AdminDashboardPage = () => {
             <Tabs value={activeTab} onValueChange={setActiveTab}>
                 {
                     menuItems.map((menuItem) =>(
-                        <TabsContent value={menuItem.value}>
+                        <TabsContent value={menuItem.value} key={menuItem.value}>
                             {menuItem.component !== null ? menuItem.component: null}
                         </TabsContent>
                     ))

@@ -13,7 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { filterOptions, sortOptions } from "@/config/config";
 import { AuthContext } from "@/context/auth-context";
 import { StudentContext } from "@/context/student-context";
-import { checkCoursePurchaseInfo, fetchStudentCourseList } from "@/services";
+import { checkCoursePurchaseInfoService, fetchStudentCourseList } from "@/services";
 import { ArrowUpDownIcon } from "lucide-react";
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -33,9 +33,9 @@ const StudentCourses = () => {
   const [sort, setSort] = useState("price-lowtohigh");
   const [filters, setFilters] = useState({});
   const [searchParams, setSearchParams] = useSearchParams();
-  const navigate =useNavigate();
+  const navigate = useNavigate();
 
-  const {auth} =useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
   const { studentCourseList, setStudentCourseList, loading, setLoading } = useContext(StudentContext);
 
   const handleFilterOnChange = (getKeyItem, getOption) => {
@@ -54,8 +54,8 @@ const StudentCourses = () => {
     sessionStorage.setItem("filters", JSON.stringify(copyFilter));
   };
 
-  const fetchAllCourseList = async (filters, sort) => { 
-    const query =new URLSearchParams({...filters, sortBy: sort});
+  const fetchAllCourseList = async (filters, sort) => {
+    const query = new URLSearchParams({ ...filters, sortBy: sort });
 
     const response = await fetchStudentCourseList(query);
     if (response?.success) {
@@ -64,6 +64,19 @@ const StudentCourses = () => {
     }
     // console.log(response.data);
   };
+  const handleCourseNavigate = async (getCourseId) => {
+    const response = await checkCoursePurchaseInfoService(getCourseId, auth?.user?._id);
+    console.log(response);
+    if (response?.success) {
+      if (response?.data) {
+        navigate(`/course-progress/${getCourseId}`);
+      } else {
+        navigate(`/course/details/${getCourseId}`);
+      }
+    }
+  };
+  
+
 
   useEffect(() => {
     const buildQuery = createSearchParamsHelper(filters);
@@ -71,30 +84,20 @@ const StudentCourses = () => {
   }, [filters]);
 
   useEffect(() => {
-    if(filters !== null && sort !== null)
-    fetchAllCourseList(filters, sort);
+    if (filters !== null && sort !== null) fetchAllCourseList(filters, sort);
   }, [filters, sort]);
 
-  useEffect(() =>{
+  useEffect(() => {
     setSort("price-lowtohigh");
-    setFilters(JSON.parse(sessionStorage.getItem('filters')) || {})
-  }, [])
-
-  useEffect(() =>{
-    sessionStorage.removeItem("filters")
+    setFilters(JSON.parse(sessionStorage.getItem("filters")) || {});
   }, []);
 
-  const handleCourseNavigate =async(getCourseId) =>{
-    const response =await checkCoursePurchaseInfo(getCourseId, auth?.user?._id);
-    if(response?.success){
-      if(response?.data){
-        navigate(`/course-progress/${getCourseId}`);
-      }else{
-        navigate(`/courses/details/${getCourseId}`);
-      }
-    }
+  useEffect(() => {
+    return (() =>{
+      sessionStorage.removeItem("filters");
+    })
+  }, []);
 
-  }
 
   return (
     <div className="container mx-auto p-4">
@@ -149,7 +152,7 @@ const StudentCourses = () => {
           <div className="space-y-4">
             {studentCourseList && studentCourseList.length > 0 ? (
               studentCourseList.map((item) => (
-                <Card key={item?._id} className="cursor-pointer" onClick={() =>handleCourseNavigate(item?._id)}>
+                <Card key={item?._id} className="cursor-pointer" onClick={() => handleCourseNavigate(item?._id)}>
                   <CardContent className="flex gap-4 p-4">
                     <div className="w-48 h-32 flex-shrink-0">
                       <img src={item?.image} alt={item.title} className="w-full h-full object-cover" />
@@ -169,8 +172,9 @@ const StudentCourses = () => {
                   </CardContent>
                 </Card>
               ))
+            ) : loading ? (
+              <Skeleton />
             ) : (
-              loading ? <Skeleton /> :
               <h1 className="font-extrabold text-4xl">Not Found</h1>
             )}
           </div>

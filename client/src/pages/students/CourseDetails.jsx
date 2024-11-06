@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StudentContext } from "@/context/student-context";
-import { courseDetailsById, createPayment } from "@/services";
+import { StudentCourseDetailsById, createPayment } from "@/services";
 import { CheckCircle, Globe, Lock, PlayCircle } from "lucide-react";
 import VideoPlayer from "@/components/videoPlayer/VideoPlayer";
 import React, { useContext, useEffect, useState } from "react";
@@ -22,9 +22,9 @@ const StudentCourseDetails = () => {
   const { id } = useParams();
 
   const fetchStudentCourseDetails = async () => {
-    const response = await courseDetailsById(courseEditedId);
+    const response = await StudentCourseDetailsById(courseEditedId);
     if (response?.success) {
-      setStudentCourseDetails(response.data);
+      setStudentCourseDetails(response?.data);
       setLoading(false);
         // console.log(response.data);
     } else {

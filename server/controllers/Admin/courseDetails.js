@@ -40,10 +40,10 @@ const getAllCourse =async(req, res) =>{
 
 const getCourseDetails =async(req, res) =>{
     try{
-        const id =req.params.id;
+        const {id} =req.params;
         const courseDetails =await Course.findById(id);
         if(!courseDetails){
-            res.status(404).json({
+            return res.status(404).json({
                 success: false,
                 message: "course not found",
             })
@@ -72,7 +72,7 @@ const updateCourse =async(req, res) =>{
             {new: true}
         )
         if(!result){
-            res.status(404).json({
+           return res.status(404).json({
                 success: false,
                 message: "course not found",
             })
