@@ -80,17 +80,19 @@ const getViewCoursesDetails =async(req, res) =>{
 
 const coursePurchaseInfo =async(req, res) =>{
     try {
-        const {id, studentId} =req.params;
+       const {id, studentId} =req.params;
         
-        const studentCourses =await StudentCourse.findOne({
-            userId: studentId,
-        })
-        console.log(studentCourses, 'error');
-        const ifStudentAlreadyBoughtCurrentCourse =studentCourses.courses.findIndex((item) =>item.courseId ===id) > -1;
-        res.status(200).json({
-            success: true,
-            data: ifStudentAlreadyBoughtCurrentCourse
-        })
+       const studentCourses = await StudentCourse.findOne({
+        userId: studentId,
+      });
+
+      const ifStudentAlreadyBoughtCurrentCourse =
+        studentCourses.courses.findIndex((item) => item.courseId === id) > -1;
+      res.status(200).json({
+        success: true,
+        data: ifStudentAlreadyBoughtCurrentCourse,
+      });
+
     } catch (error) {
         console.log(error);
         res.status(500).json({

@@ -41,10 +41,10 @@ const StudentCourses = () => {
   const handleFilterOnChange = (getKeyItem, getOption) => {
     let copyFilter = { ...filters };
     const indexOfKeyItem = Object.keys(copyFilter).indexOf(getKeyItem);
-    // console.log(indexOfKeyItem, getKeyItem);
+   
     if (indexOfKeyItem === -1) {
       copyFilter = { ...copyFilter, [getKeyItem]: [getOption.id] };
-      // console.log(copyFilter);
+      
     } else {
       const indexOfOption = copyFilter[getKeyItem].indexOf(getOption.id);
       if (indexOfOption === -1) copyFilter[getKeyItem].push(getOption.id);
@@ -56,8 +56,9 @@ const StudentCourses = () => {
 
   const fetchAllCourseList = async (filters, sort) => {
     const query = new URLSearchParams({ ...filters, sortBy: sort });
-
+    
     const response = await fetchStudentCourseList(query);
+    
     if (response?.success) {
       setStudentCourseList(response?.data);
       setLoading(false);
@@ -66,7 +67,6 @@ const StudentCourses = () => {
   };
   const handleCourseNavigate = async (getCourseId) => {
     const response = await checkCoursePurchaseInfoService(getCourseId, auth?.user?._id);
-    console.log(response);
     if (response?.success) {
       if (response?.data) {
         navigate(`/course-progress/${getCourseId}`);
@@ -75,6 +75,7 @@ const StudentCourses = () => {
       }
     }
   };
+
   
 
 
