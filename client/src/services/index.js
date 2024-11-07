@@ -52,14 +52,6 @@ export async function courseDetailsById(id) {
   const { data } = await accessApi.get(`/admin/course/get/details/${id}`);
   return data;
 }
-export async function StudentCourseDetailsById(courseId) {
-  const { data } = await accessApi.get(`/student/course/get/details/${courseId}`);
-  return data;
-}
-export async function checkCoursePurchaseInfoService(courseId, studentId) {
-  const { data } = await accessApi.get(`/student/course/purchase-info/${courseId}/${studentId}`);
-  return data;
-}
 export async function updateCourseById(id, formData) {
   const { data } = await accessApi.put(`/admin/course/update/${id}`, formData);
   return data;
@@ -68,6 +60,16 @@ export async function fetchStudentCourseList(query) {
   const { data } = await accessApi.get(`/student/course/get?${query}`);
   return data;
 }
+export async function StudentCourseDetailsById(courseId) {
+  const { data } = await accessApi.get(`/student/course/get/details/${courseId}`);
+  return data;
+}
+export async function checkCoursePurchaseInfoService(courseId, studentId) {
+  const { data } = await accessApi.get(`/student/course/purchase-info/${courseId}/${studentId}`);
+  return data;
+}
+
+
 export async function createPayment(formData) {
   const { data } = await accessApi.post(`/student/order/create`, formData);
   return data;
