@@ -5,7 +5,7 @@ import { StudentContext } from "@/context/student-context";
 import { fetchStudentBuyingCourses } from "@/services";
 import { Watch } from "lucide-react";
 import React, { useContext, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const StudentCoursesViewPage = () => {
   const { auth } = useContext(AuthContext);
@@ -14,13 +14,11 @@ const StudentCoursesViewPage = () => {
 
   const fetchBoughtCourses = async () => {
     const response = await fetchStudentBuyingCourses(auth?.user?._id);
-    // console.log(response);
 
     if (response?.success) {
       setStudentBoughtCourseList(response?.data);
-    } else {
-      console.log("Failed to fetch bought courses");
     }
+    // console.log(response.data);
   };
 
   useEffect(() => {

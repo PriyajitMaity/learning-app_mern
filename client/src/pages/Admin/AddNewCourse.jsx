@@ -58,7 +58,7 @@ const AddNewCourse = () => {
       ...courseLandingFormData,
       students: [],
       curriculum: courseCurriculumFormData,
-      isPublished: true,
+      isPublised: true,
     };
     const response =
       editedCourseId !== null
@@ -75,12 +75,11 @@ const AddNewCourse = () => {
   const fetchCurrentCourseDetails = async () => {
     const response = await courseDetailsById(editedCourseId);
     // console.log(response, 'responseeeam')
-    if (response.success) {
+    if (response?.success) {
       const formData = Object.keys(courseLandingInitialFormData).reduce((acc, key) => {
         acc[key] = response?.data[key] || courseLandingInitialFormData[key];
         return acc;
       }, {});
-      // console.log(formData,response.data, 'formdata');
       setCourseLandingFormData(formData);
       setCourseCurriculumFormData(response?.data?.curriculum);
     }

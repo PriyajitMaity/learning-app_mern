@@ -158,7 +158,7 @@ const paymentAndFinalizeOrder =async(req, res) =>{
                 students: {
                     studentId: order.userId,
                     studentName: order.userName,
-                    studentemail: order.userEmail,
+                    studentEmail: order.userEmail,
                     paidAmount: order.coursePricing,
                 }
             }

@@ -46,7 +46,7 @@ const AdminDashboardPage = () => {
         resetCredentials();
         sessionStorage.clear();
     }
-console.log(courseList, 'courseList');
+// console.log(courseList, 'courseList');
 
   return <div className="flex h-full min-h-screen bg-gray-100">
     <aside className="w-64 bg-white shadow-md hidden md:block">
