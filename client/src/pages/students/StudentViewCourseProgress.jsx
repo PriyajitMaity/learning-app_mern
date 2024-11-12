@@ -63,31 +63,28 @@ const StudentViewCourseProgress = () => {
         studentCurrCourseProgress?.courseDetails?._id,
         currLecture?._id
       );
-      if(response.success){
+      if (response.success) {
         fetchCurrCourseProgress();
       }
     }
   };
 
-  const handleRewatchCourse =async() =>{
-    const response =await resetCourseProgress(
-      auth?.user?._id,
-      studentCurrCourseProgress?.courseDetails?._id
-    )
-    if(response?.success){
+  const handleRewatchCourse = async () => {
+    const response = await resetCourseProgress(auth?.user?._id, studentCurrCourseProgress?.courseDetails?._id);
+    if (response?.success) {
       setCurrLecture(null);
       setShowConfetti(false);
       setShowCompleteDialog(false);
       fetchCurrCourseProgress();
     }
-  }
+  };
 
   useEffect(() => {
     fetchCurrCourseProgress();
   }, [id]);
 
-  useEffect(() =>{
-    if(currLecture?.progressValue ===1) updateCourseProgress();
+  useEffect(() => {
+    if (currLecture?.progressValue === 1) updateCourseProgress();
   }, [currLecture]);
 
   useEffect(() => {
@@ -95,13 +92,18 @@ const StudentViewCourseProgress = () => {
   }, [showConfetti]);
 
   // console.log(currLecture, "relalala");
-  
+
   return (
     <div className="flex flex-col h-screen bg-[#1c1d1f] text-white">
       {showConfetti && <Confetti />}
       <div className="flex items-center justify-between p-4 bg-[#1c1d1f] border-b border-gray-700">
         <div className="flex items-center space-x-4">
-          <Button className="text-black bg-white" variant="ghost" size="sm">
+          <Button
+            className="text-black bg-white"
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/student-courses")}
+          >
             <ChevronLeft className="h-4 w-4 mr-2" />
             Back to my Courses page
           </Button>
