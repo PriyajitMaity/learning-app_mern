@@ -2,7 +2,6 @@ import accessApi from "@/api/accessApi";
 export async function registerService(formData) {
   const { data } = await accessApi.post("/auth/register", {
     ...formData,
-    role: "user",
   });
   return data;
 }
@@ -69,7 +68,6 @@ export async function checkCoursePurchaseInfoService(courseId, studentId) {
   return data;
 }
 
-
 export async function createPayment(formData) {
   const { data } = await accessApi.post(`/student/order/create`, formData);
   return data;
@@ -87,7 +85,11 @@ export async function getStudentCurrentCourseProgress(userId, courseId) {
   return data;
 }
 export async function markLectureAsView(userId, courseId, lectureId) {
-  const { data } = await accessApi.post(`/student/course-progress/mark-lecture-viewed/`, {userId, courseId, lectureId});
+  const { data } = await accessApi.post(`/student/course-progress/mark-lecture-viewed/`, {
+    userId,
+    courseId,
+    lectureId,
+  });
   return data;
 }
 export async function resetCourseProgress(userId, courseId) {

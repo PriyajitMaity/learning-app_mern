@@ -19,6 +19,16 @@ export const signUpFormControls =[
         placeholder: 'Enter your password',
         type: 'password',
         componentType: 'input'
+    },
+    {
+      name: 'role',
+      label: 'Role',
+      placeholder: 'Select your role',
+      componentType:'select',
+      options: [
+        { id: 'admin', label: 'Admin' },
+        { id: 'user', label: 'User' }
+      ]
     }
 ]
 
@@ -47,7 +57,8 @@ export const initialSignInData ={
 export const initialSignUpData ={
     userName: '',
     userEmail: '',
-    password: ''
+    password: '',
+    role: ''
 }
 
 export const languageOptions = [
