@@ -1,4 +1,4 @@
-This is MERN project with shadcn-ui
+This is MERN project using shadcn-ui
 
 ## Getting Started
 First run the development server
