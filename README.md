@@ -14,8 +14,12 @@ yarn
 ```
 "This will be provide soon"
 ```
-4. Start the server
+4. Start the server -
 ````
 npm run dev
 ````
-5. 
+5. Now run the app -
+```
+npm start
+```
+   
