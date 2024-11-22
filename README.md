@@ -24,8 +24,3 @@ npm start
 ```
 
 ## Preview
-![Screenshot (66)](https://github.com/user-attachments/assets/69be7df9-0f5b-4264-9bfa-31cd783c81f8)
-![Screenshot (65)](https://github.com/user-attachments/assets/158ed8b5-ac7d-417b-a86c-2eb228032340)
-![Screenshot (67)](https://github.com/user-attachments/assets/d2e328c7-c0ad-4be6-90ce-7e6435368142)
-![Screenshot (64)](https://github.com/user-attachments/assets/3932d96c-f961-4ef0-82a5-fcdb3f648dc0)
-
