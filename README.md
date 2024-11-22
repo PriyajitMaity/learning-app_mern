@@ -22,4 +22,6 @@ npm run dev
 ```
 npm start
 ```
+
+##Preview
    
