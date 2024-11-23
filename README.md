@@ -4,10 +4,10 @@ Building an Learning-web-App using MERN Stack (MongoDB, ExpressJs, ReactJs, Node
 1. Fork the Repo then clone it, or download it.
 2. First install all dependencies:
 ```
-# with npm
+## with npm
 npm install
 
-# with yarn
+## with yarn
 yarn
 ```
 3. Create a config/config.js file and insert the following code it will contains all code variables. Replace values with yours !!!
