@@ -24,7 +24,7 @@ npm run dev
 ```
 npm start
 ```
-nbbgghyytyyddfdfftrtttdd
+nbbgghyytyyddfdfft
 ## Preview
 ![Screenshot (64)](https://github.com/user-attachments/assets/dfbcd411-9649-4ab2-8335-9f6178eb74c0)
 ![Screenshot (67)](https://github.com/user-attachments/assets/354d4b53-16e4-4443-91d3-167ff4c49eec)
